@@ -1,6 +1,6 @@
 FROM node:carbon
 
-COPY ./docker/entrypoint.sh /entrypoint
+COPY ./docker/entrypoint.sh /entrypoint/
 
 RUN ["chmod", "+x", "entrypoint/entrypoint.sh"]
 
