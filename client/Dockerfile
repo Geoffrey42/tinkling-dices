@@ -4,7 +4,9 @@ COPY ./docker/entrypoint.sh /entrypoint/
 
 RUN ["chmod", "+x", "entrypoint/entrypoint.sh"]
 
-WORKDIR /data
+
+WORKDIR /data/
+
 
 EXPOSE 8080
 
