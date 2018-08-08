@@ -9,15 +9,20 @@ describe('Read test', () => {
     const rooms = new Room(parsedContent)
 
     beforeEach((done) => {
-        rooms.save().then( () => {
+        rooms
+            .save()
+            .then( () => {
             done();
         });
     })
 
     it('Find Room by name', (done) => {
-        Room.findOne({'rooms.0.name': 'Salle #1'}).then( (resultRooms) => {
-            console.log(resultRooms.rooms[0]);
-            done();
+        Room
+            //.findOne({'rooms.0.name': 'Salle #1'})
+            .findOne({'rooms.0.name': 'Salle #1'})
+            .then( (resultRooms) => {
+                console.log(resultRooms.rooms[0]);
+                done();
         })
     })
 
