@@ -15,10 +15,6 @@ const SingleRoomSchema = new Schema({
     updatedAt: { type: Date, default: Date.now }
 });
 
-const AllRoomSchema = new Schema({
-    rooms: [SingleRoomSchema]
-})
-
-const Room = mongoose.model('room', AllRoomSchema);
+const Room = mongoose.model('room', SingleRoomSchema);
 
 module.exports = Room;
