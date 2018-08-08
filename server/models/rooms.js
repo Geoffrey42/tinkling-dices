@@ -6,7 +6,7 @@ const EquipementSchema = new Schema({
     name: String
 })
 
-const RoomSchema = new Schema({
+const SingleRoomSchema = new Schema({
     name: String,
     description: String,
     capacity: Number,
@@ -15,6 +15,6 @@ const RoomSchema = new Schema({
     updatedAt: { type: Date, default: Date.now }
 });
 
-const Room = mongoose.model('room', RoomSchema);
+const Room = mongoose.model('room', SingleRoomSchema);
 
 module.exports = Room;
