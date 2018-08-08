@@ -3,10 +3,13 @@ const Room = require('../models/rooms')
 var fs = require('fs')
 
 describe('Rooms creation', () => {
-    it('Room saving', () => {
+    it('Room saving', (done) => {
         rawJSON = fs.readFileSync('./originalDataSet/rooms.json')
         var parsedContent = JSON.parse(rawJSON)
         const rooms = new Room(parsedContent)
-        rooms.save();
+        rooms.save().then( () => {
+            assert(!rooms.isNew);
+            done();
+        });
     })
 })
