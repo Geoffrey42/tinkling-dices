@@ -24,3 +24,10 @@ beforeEach('Delete rooms', (done) => {
         done();
     })
 });
+
+beforeEach('Delete bookings', (done) => {
+    const {bookings} = mongoose.connection.collections;
+    bookings.drop( () => {
+        done();
+    })
+});
