@@ -7,10 +7,10 @@ describe('Create test', () => {
         rawJSON = fs.readFileSync('./originalDataSet/rooms.json')
         var parsedContent = JSON.parse(rawJSON)
         for (var i = 0; i < parsedContent.rooms.length; i++) {
-            const rooms = new Room(parsedContent.rooms[i])
-            rooms
+            const room = new Room(parsedContent.rooms[i])
+            room
                 .save()
-                .then( () => { assert(!rooms.isNew); });
+                .then( () => { assert(!room.isNew); });
         }
         done();
     })
