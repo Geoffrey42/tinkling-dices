@@ -16,6 +16,8 @@ db.once("open", function(callback) {
     console.log("Connection Succeeded");
 });
 
+var Post = require("../models/post");
+
 app.get('/posts', (req, res) => {
     res.send(
         [{
