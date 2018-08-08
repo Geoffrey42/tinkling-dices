@@ -5,7 +5,8 @@ mongoose.Promise = global.Promise;
 before( (done) => {
     mongoose.connect('mongodb://localhost:27017/rooms_booking', { useNewUrlParser: true });
 
-    mongoose.connection
+    mongoose
+        .connection
         .once('open', () =>
                 {
                     console.log('Connection is established');
