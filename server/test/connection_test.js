@@ -10,7 +10,7 @@ before( (done) => {
         .once('open', () =>
                 {
                     console.log('Connection is established');
-                    done()
+                    done();
                 })
         .on('error', (error) =>
                 {
