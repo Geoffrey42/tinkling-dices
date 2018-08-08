@@ -6,10 +6,15 @@ describe('Create test', () => {
     it('Room saving', (done) => {
         rawJSON = fs.readFileSync('./originalDataSet/rooms.json')
         var parsedContent = JSON.parse(rawJSON)
-        const rooms = new Room(parsedContent)
-        rooms.save().then( () => {
-            assert(!rooms.isNew);
-            done();
-        });
+        console.log(parsedContent.rooms[0])
+        for (var i = 0; i < parsedContent.rooms.length; i++) {
+            const rooms = new Room(parsedContent.rooms[i])
+            rooms
+                .save()
+                .then( () => {
+                    assert(!rooms.isNew);
+            });
+        }
+        done();
     })
 })
