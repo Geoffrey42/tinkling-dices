@@ -14,3 +14,10 @@ before( (done) => {
                     console.warn('Error during connection : ', error)
                 })
 })
+
+beforeEach('Delete rooms', (done) => {
+    const {rooms} = mongoose.connection.collections;
+    rooms.drop( () => {
+        done();
+    })
+});
