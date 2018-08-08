@@ -8,6 +8,6 @@ const BookingSchema = new Schema({
     endsAt: Date
 });
 
-const Room = mongoose.model('booking', BookingSchema);
+const Booking = mongoose.model('booking', BookingSchema);
 
 module.exports = Booking;
