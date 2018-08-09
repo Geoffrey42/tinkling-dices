@@ -1,8 +1,11 @@
 <template>
   <div id="app">
       <app-header></app-header>
+      <p>Make a wish ...</p>
       <app-filter></app-filter>
+      <p>... Book an amazing room</p>
       <app-rooms-grid></app-rooms-grid>
+      <p>Thanks !</p>
       <app-footer></app-footer>
   </div>
 </template>
