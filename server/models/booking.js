@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
+const Room = require('./rooms');
 
 const BookingSchema = new Schema({
-    roomId: String,
+    roomId: Schema.Types.ObjectId,
     beginsAt: Date,
     endsAt: Date
 });
