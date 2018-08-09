@@ -1,5 +1,6 @@
 const Booking = require('../models/bookings')
 
+
 module.exports = {
     readAll(req, res) {
         Booking
@@ -23,5 +24,16 @@ module.exports = {
             endsAt: endsAt
         });
         booking.save();
+    },
+    delete(req, res) {
+        Booking.findByIdAndRemove(req.params.id)
+            .then( (result) => {
+                if (!result) {
+                    return res.status(500).send({
+                        message: "Booking not found with id " + req.params.id
+                    });
+                }
+                res.send({ message: "Booking deleted successfully !"});
+            })
     }
 }
