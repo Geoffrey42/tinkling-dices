@@ -8,4 +8,5 @@ module.exports = (server) => {
     server.get('/bookings', BookingController.readAll);
     server.get('/bookings/:id', BookingController.read);
     server.post('/booking', BookingController.create);
+    server.delete('/booking', BookingController.remove);
 }
