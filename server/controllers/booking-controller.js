@@ -20,10 +20,17 @@ module.exports = {
         const {roomId,beginsAt,endsAt} = req.body;
         const booking = new Booking({
             roomId: roomId,
-            beginsAt: beginsAt,
-            endsAt: endsAt
+            date: date,
+            hour: hour
         });
-        booking.save();
+        booking.save((error) => {
+            if (error) {
+                return res.status(500).send({
+                    message: "Booking has not been recorded because " + error
+                });
+            }
+            res.send({ message: "Booking recorded successfully !" });
+        });
     },
     delete(req, res) {
         Booking.findByIdAndRemove(req.params.id)

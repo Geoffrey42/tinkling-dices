@@ -5,8 +5,8 @@ const Room = require('./rooms');
 
 const BookingSchema = new Schema({
     roomId: Schema.Types.ObjectId,
-    beginsAt: Date,
-    endsAt: Date
+    date: Date,
+    hour: Number
 });
 
 const Booking = mongoose.model('booking', BookingSchema);
