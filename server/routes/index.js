@@ -1,11 +1,8 @@
-module.exports = (app) => {
-    app.get('/posts', (req, res) => {
-        res.send(
-                [{
-                    title: "Hello World!",
-                    description: "Hi there! How are you ?"
-                }]
-                )
+module.exports = (server) => {
+    server.get('/rooms', (req, res) => {
+        res.send({rooms: 'des rooms'})
+    });
+    server.get('/rooms/:id', (req, res) => {
+        res.send({room: 'une room avec id ' + req.params.id});
     })
-    app.listen(process.env.PORT || 8081)
 }
