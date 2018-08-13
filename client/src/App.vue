@@ -2,7 +2,7 @@
   <div id="app">
       <app-header></app-header>
       <p>Make a wish ...</p>
-      <app-filter></app-filter>
+      <app-form></app-form>
       <p>... Book an amazing room</p>
       <app-rooms-grid></app-rooms-grid>
       <p>Thanks !</p>
@@ -12,7 +12,7 @@
 
 <script>
 import Header from './components/Header.vue';
-import Filter from './components/Filter.vue';
+import Form from './components/Form.vue';
 import RoomsGrid from './components/RoomsGrid.vue';
 import Footer from './components/Footer.vue';
 
@@ -20,7 +20,7 @@ export default {
   name: 'app',
   components: {
       'app-header': Header,
-      'app-filter': Filter,
+      'app-form': Form,
       'app-rooms-grid': RoomsGrid,
       'app-footer': Footer
   }
