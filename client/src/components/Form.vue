@@ -24,7 +24,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 
 .filter_container {
     display: flex;

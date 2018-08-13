@@ -1,16 +1,14 @@
-<template>
-    <b-dropdown hoverable>
-        <button class="button is-info" slot="trigger">
-            <span>Equipements</span>
-            <b-icon icon="menu-down"></b-icon>
-        </button>
 
-        <b-dropdown-item
-            v-for="(equipement, index) in equipements"
-            :key="`equipements-${index}`">
+<template>
+    <b-field>
+        <b-select placeholder="Equipements">
+            <option
+                v-for="(equipement, index) in equipements"
+                :key="`equipements-${index}`">
             {{ equipement }}
-        </b-dropdown-item>
-    </b-dropdown>
+            </option>
+        </b-select>
+    </b-field>
 </template>
 
 <script>

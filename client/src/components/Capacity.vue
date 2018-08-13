@@ -1,23 +1,20 @@
 <template>
-    <b-dropdown hoverable>
-        <button class="button is-info" slot="trigger">
-            <span>Capacity</span>
-            <b-icon icon="menu-down"></b-icon>
-        </button>
-
-        <b-dropdown-item
-            v-for="(capacity, index) in capacities"
-            :key="`capacities-${index}`">
-            {{ capacity }}
-        </b-dropdown-item>
-    </b-dropdown>
+    <b-field>
+        <b-select placeholder="Capacity">
+            <option
+                v-for="(capacity, index) in capacities"
+                :key="`capacities-${index}`">
+                {{ capacity }}
+            </option>
+        </b-select>
+    </b-field>
 </template>
 
 <script>
 export default {
     data () {
         return {
-            capacities: ['5','10','11','26']
+            capacities: ['05','10','11','26']
         }
     }
 }
