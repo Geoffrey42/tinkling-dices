@@ -1,6 +1,6 @@
 <template>
     <form class="filter_container">
-            <form-date></form-date>
+            <form-date @dateWasPicked="date = $event"></form-date>
             <form-hour></form-hour>
             <form-capacity></form-capacity>
             <form-equipements></form-equipements>
@@ -19,6 +19,11 @@ export default {
         'form-hour': Hour,
         'form-capacity': Capacity,
         'form-equipements': Equipements
+    },
+    data() {
+        return{
+            date: ""
+        };
     }
 }
 
