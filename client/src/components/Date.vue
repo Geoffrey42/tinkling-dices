@@ -1,7 +1,7 @@
 <template>
-    <b-field label="Select a date">
+    <b-field>
         <b-datepicker
-             placeholder="Click to select..."
+             placeholder="Select a date"
              icon="calendar-today">
         </b-datepicker>
     </b-field>
