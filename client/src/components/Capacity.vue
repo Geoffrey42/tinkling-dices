@@ -1,6 +1,6 @@
 <template>
     <b-field>
-        <b-select placeholder="Capacity">
+        <b-select placeholder="Capacity" @input="sendCapacity($event)">
             <option
                 v-for="(capacity, index) in capacities"
                 :key="`capacities-${index}`">
@@ -15,6 +15,11 @@ export default {
     data () {
         return {
             capacities: ['05','10','11','26']
+        }
+    },
+    methods: {
+        sendCapacity(event) {
+            this.$emit("capacityWasChanged", event);
         }
     }
 }
