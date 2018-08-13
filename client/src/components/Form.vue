@@ -1,12 +1,10 @@
 <template>
-    <div>
-        <form>
+    <form class="filter_container">
             <form-date></form-date>
             <form-hour></form-hour>
             <form-capacity></form-capacity>
             <form-equipements></form-equipements>
-        </form>
-    </div>
+    </form>
 </template>
 
 <script>
@@ -25,3 +23,13 @@ export default {
 }
 
 </script>
+
+<style>
+
+.filter_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+</style>
