@@ -24,11 +24,22 @@ export default {
     },
     data() {
         return{
-            date: "",
+            date: new Date(),
             hour: 0,
             capacity: "",
             equipement: ""
         };
+    },
+    computed: {
+        sendUserInput() {
+            var userInput = {
+                date: this.date,
+                hour: this.hour,
+                capacity: this.capacity,
+                equipement: this.equipement
+            };
+            return this.$emit("formWasChanged", userInput)
+        }
     }
 }
 
