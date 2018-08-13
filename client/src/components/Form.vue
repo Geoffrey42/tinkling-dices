@@ -2,8 +2,10 @@
     <form class="filter_container">
             <form-date @dateWasPicked="date = $event"></form-date>
             <form-hour @hourWasChanged="hour = $event"></form-hour>
-            <form-capacity></form-capacity>
-            <form-equipements></form-equipements>
+            <form-capacity @capacityWasChanged="capacity = $event"></form-capacity>
+            <form-equipements
+                @equipementWasChanged="equipement = $event">
+            </form-equipements>
     </form>
 </template>
 
@@ -23,7 +25,9 @@ export default {
     data() {
         return{
             date: "",
-            hour: 0
+            hour: 0,
+            capacity: "",
+            equipement: ""
         };
     }
 }
