@@ -18,7 +18,7 @@ module.exports = {
     },
     readByTime(req, res) {
         Booking
-            .find({'date':req.body.date, 'hour':req.body.hour})
+            .find({'date':req.params.date, 'hour':req.params.hour})
             .then( (results) => {
                 res.send(results);
             })
