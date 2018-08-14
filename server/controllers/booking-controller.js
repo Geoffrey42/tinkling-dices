@@ -24,7 +24,14 @@ module.exports = {
             })
     },
     create(req, res) {
-        const {roomId,beginsAt,endsAt} = req.body;
+        //const {roomId, date,hour} = req.body;
+        console.log("dans controller")
+        console.log(req.body.roomId)
+        console.log("----------------")
+        console.log(req.body.date)
+        console.log("----------------")
+        console.log(req.body.hour)
+        console.log("----------------")
         const booking = new Booking({
             roomId: roomId,
             date: date,
