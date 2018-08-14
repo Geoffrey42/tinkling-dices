@@ -5,15 +5,15 @@
             <div class="hero-body">
                 <div class="container">
                     <p>Make a wish ...</p>
-                    <app-form @formWasChanged="getUserInput($event)"></app-form>
+                    <app-form></app-form>
                 </div>
             </div>
         </section>
         <section class="hero">
             <div class="hero-body">
                 <div class="container">
-            <p class="misplaced">... Book an amazing room</p>
-            <app-rooms-grid :userInput="userInput"></app-rooms-grid>
+                    <p class="misplaced">... Book an amazing room</p>
+                    <app-rooms-grid></app-rooms-grid>
                 </div>
             </div>
         </section>
@@ -29,31 +29,15 @@ import Header from './components/Header.vue';
 import Form from './components/Form.vue';
 import RoomsGrid from './components/RoomsGrid.vue';
 import Footer from './components/Footer.vue';
-/* eslint-disable */
 
 export default {
     name: 'app',
-    data() {
-        return {
-            userInput: {}
-        };
-    },
     components: {
         'app-header': Header,
         'app-form': Form,
         'app-rooms-grid': RoomsGrid,
         'app-footer': Footer
     },
-    methods: {
-        getUserInput(event) {
-            console.log('event: ' + event)
-            this.userInput.date = event.date
-            this.userInput.hour = event.hour
-            this.userInput.capacity = event.capacity
-            this.userInput.equipement = event.equipement
-            return this.userInput
-        }
-    }
 }
 </script>
 
