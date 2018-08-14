@@ -6,6 +6,7 @@
             <form-equipements
                 @equipementWasChanged="equipement = $event">
             </form-equipements>
+            <button class="button" @click.prevent="sendUserInput">OK</button>
     </form>
 </template>
 
@@ -14,6 +15,7 @@ import MyDate from './Date.vue';
 import Hour from './Hour.vue';
 import Capacity from './Capacity.vue';
 import Equipements from './Equipements.vue';
+/* eslint-disable */
 
 export default {
     components: {
@@ -30,7 +32,7 @@ export default {
             equipement: ""
         };
     },
-    computed: {
+    methods: {
         sendUserInput() {
             var userInput = {
                 date: this.date,
