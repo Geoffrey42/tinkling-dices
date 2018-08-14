@@ -15,7 +15,7 @@ import MyDate from './Date.vue';
 import Hour from './Hour.vue';
 import Capacity from './Capacity.vue';
 import Equipements from './Equipements.vue';
-/* eslint-disable */
+import { eventBus } from '../main';
 
 export default {
     components: {
@@ -40,7 +40,7 @@ export default {
                 capacity: this.capacity,
                 equipement: this.equipement
             };
-            return this.$emit("formWasChanged", userInput)
+            eventBus.$emit("formWasChanged", userInput)
         }
     }
 }
