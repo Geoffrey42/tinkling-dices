@@ -4,7 +4,7 @@
             <option
                   v-for="(hour, index) in hours"
                   :key="`hours-${index}`">
-            {{ hour }}h
+            {{ hour }}
             </option>
         </b-select>
     </b-field>
