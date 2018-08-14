@@ -4,33 +4,45 @@
             class="column"
             v-for="room in rooms"
             :key="room._id"
-            :roomName="room.name"></rooms-grid-room>
+            :userInput="userInput"
+            :roomName="room.name"
+            :roomId="room._id"></rooms-grid-room>
     </div>
 </template>
 
 <script>
-import RoomService from '../services/RoomService'
+import RoomService from '../services/RoomService';
+import BookingService from '../services/BookingService';
 import Room from './Room.vue';
+import { eventBus } from '../main';
 
-/* eslint-disable */
 export default {
-    props: ['userInput'],
     data() {
         return {
-            rooms: []
+            userInput: Object,
+            rooms: [],
+            currentBookings: []
         }
     },
     components: {
         'rooms-grid-room': Room
     },
-    mounted() {
+    created() {
+        eventBus.$on('formWasChanged', (userInput) => {
+            this.userInput = userInput;
+            BookingService.getBookingsByTime(this.userInput.date, this.userInput.hour)
+                .then ( (fetchedBookings) => {
+                    for (var i = 0; i < fetchedBookings.data.length; i++) {
+                        this.currentBookings.push(fetchedBookings.data[i])
+                    }
+                })
+        });
         RoomService.getAllRooms()
             .then( (fetchedRooms) => {
                 for (var i = 0; i < fetchedRooms.data.length; i++) {
                     this.rooms.push(fetchedRooms.data[i])
                 }
             })
-            .catch( (error) => console.log(error))
     }
 }
 
