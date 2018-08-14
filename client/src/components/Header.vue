@@ -1,6 +1,7 @@
 <template>
-    <div>
-    </div>
+    <nav class="navbar is-primary is-fixed-top">
+          <!-- navbar brand, navbar menu... -->
+    </nav>
 </template>
 
 <script>
