@@ -10,9 +10,15 @@
 <script>
 
 export default {
+    data() {
+        return {
+            pickedDate: new Date
+        }
+    },
     methods: {
         sendDate(event) {
-            this.$emit('dateWasPicked', event);
+            this.pickedDate = event;
+            this.$emit('dateWasPicked', event.toISOString());
         }
     }
 }
