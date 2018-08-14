@@ -1,7 +1,7 @@
-import Api from '@/services/Api'
+import axios from 'axios'
 
 export default {
-    fetchRooms() {
-        return Api().readAll('rooms')
+    getAllRooms() {
+        return axios.get('/rooms');
     }
 }
