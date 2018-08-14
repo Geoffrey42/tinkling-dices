@@ -9,11 +9,18 @@ module.exports = {
                 res.send(results);
             })
     },
-    read(req, res) {
+    readById(req, res) {
         Booking
             .findOne({'_id':req.params.id})
             .then( (result) => {
                 res.send(result);
+            })
+    },
+    readByTime(req, res) {
+        Booking
+            .find({'date':req.body.date, 'hour':req.body.hour})
+            .then( (results) => {
+                res.send(results);
             })
     },
     create(req, res) {
