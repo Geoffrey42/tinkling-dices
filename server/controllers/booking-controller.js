@@ -24,6 +24,14 @@ module.exports = {
             })
     },
     create(req, res) {
+        console.log("************************************");
+        console.log("In controller/booking-controller.js");
+        console.log(req.body.roomId);
+        console.log("------------------------------------");
+        console.log(req.body.date);
+        console.log("------------------------------------");
+        console.log(req.body.hour);
+        console.log("************************************");
         const booking = new Booking({
             roomId: req.body.roomId,
             date: req.body.date,
