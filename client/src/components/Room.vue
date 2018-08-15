@@ -1,30 +1,39 @@
 <template>
-    <button class="button" @click="sendBooking">
-        {{ roomName }}
-    </button>
+    <section>
+        <button class="button is-medium is-info" @click="confirm">
+            {{ roomName }}
+        </button>
+    </section>
 </template>
 
 <script>
-import BookingService from '../services/BookingService'
+import BookingService from '../services/BookingService';
 
 
 export default {
     props: ['roomName', 'roomId', 'userInput'],
     methods: {
-        sendBooking() {
-            console.log(this.userInput.date);
-            var rawData = {
-                roomId: this.roomId,
-                date: this.userInput.date,
-                hour: this.userInput.hour
-            };
-            console.log("in Vue.js (rawData):");
-            console.log(rawData);
-            var jsonBooking = JSON.stringify(rawData);
-            console.log("in Vue.js (json):");
-            console.log(jsonBooking);
-            BookingService.postBooking(jsonBooking)
-        }
+        confirm() {
+            this.$dialog.confirm({
+                message: "You're about to book " + this.roomName + " for " + this.userInput.date + ".\nAre you sure ?",
+                onConfirm: () => {
+                    BookingService.postBooking({
+                        roomId: this.roomId,
+                        date: this.userInput.date,
+                        hour: this.userInput.hour
+                    })
+                    .then((response) => {
+                        console.log("response to post")
+                        console.log(response)
+                    })
+                    .catch((error) => {
+                        console.log("error to post")
+                        console.log(error)
+                    })
+                    this.$toast.open('Booking confirmed')
+                }
+            })
+        },
     }
 }
 
