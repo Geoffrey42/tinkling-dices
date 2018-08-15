@@ -1,12 +1,12 @@
 <template>
     <div class="columns">
-        <rooms-grid-room
+        <single-room
             class="column"
             v-for="room in rooms"
             :key="room._id"
             :userInput="userInput"
             :roomName="room.name"
-            :roomId="room._id"></rooms-grid-room>
+            :roomId="room._id"></single-room>
     </div>
 </template>
 
@@ -25,7 +25,7 @@ export default {
         }
     },
     components: {
-        'rooms-grid-room': Room
+        'single-room': Room
     },
     created() {
         eventBus.$on('formWasChanged', (userInput) => {
