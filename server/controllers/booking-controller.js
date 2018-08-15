@@ -24,18 +24,10 @@ module.exports = {
             })
     },
     create(req, res) {
-        //const {roomId, date,hour} = req.body;
-        console.log("dans controller")
-        console.log(req.body.roomId)
-        console.log("----------------")
-        console.log(req.body.date)
-        console.log("----------------")
-        console.log(req.body.hour)
-        console.log("----------------")
         const booking = new Booking({
-            roomId: roomId,
-            date: date,
-            hour: hour
+            roomId: req.body.roomId,
+            date: req.body.date,
+            hour: req.body.hour
         });
         booking.save((error) => {
             if (error) {
