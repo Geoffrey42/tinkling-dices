@@ -16,7 +16,7 @@ export default {
     props: ['roomName', 'roomId', 'userInput', 'visibility','currentBookings'],
     data(){
       return {
-        visible:false
+        visible: true
       }
     },
     computed: {
@@ -46,6 +46,7 @@ export default {
                         console.log("error to post")
                         console.log(error)
                     })
+                    this.visibility = true
                     this.$toast.open('Booking confirmed')
                 }
             })
