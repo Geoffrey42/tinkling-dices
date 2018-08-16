@@ -11,10 +11,12 @@
 
 <script>
 import BookingService from '../services/BookingService';
+import { eventBus } from '../main';
+
 const moment = require('moment');
 
 export default {
-    props: ['roomName', 'roomId', 'userInput', 'visibility','currentBookings'],
+    props: ['roomName', 'roomId', 'userInput', 'visibility','currentBookings', 'roomColor'],
     data(){
       return {
         visible: true,
@@ -53,12 +55,17 @@ export default {
             })
         },
     },
-    // beforeCreate() {
-    //   console.log('\tSingleRoom : beforeCreate() hook activated');
-    // },
-    // created() {
-    //   console.log('\tSingleRoom (', this.roomName, '): created() hook activated');
-    // },
+    beforeCreate() {
+      console.log('\tSingleRoom : beforeCreate() hook activated');
+    },
+    created() {
+      console.log('\tSingleRoom (', this.roomName, '): created() hook activated');
+      eventBus.$on('visibilityHasChanged', (singleRoom) => {
+        if (singleRoom._id == this.roomId) {
+          this.visibility = singleRoom.disabled;
+        }
+      })
+    },
     // beforeMount() {
     //   console.log('\tSingleRoom (', this.roomName, '): beforeMount() hook activated');
     // },
