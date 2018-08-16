@@ -24,7 +24,7 @@ export default {
         return {
             userInput: Object,
             rooms: [],
-            currentBookings: []
+            currentBookings: [],
         }
     },
     components: {
@@ -42,10 +42,6 @@ export default {
                 }
             })
             eventBus.$on('formWasChanged', (userInput) => {
-                console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
-                console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
-                console.log('rooms: ', this.rooms);
-                console.log('userInput: ', userInput);
 
                 function displayDebug(room, booking, userInput) {
                   console.log('name : ', room.name);
@@ -90,12 +86,9 @@ export default {
 
                 function isAlreadyBooked(room, booking, userInput) {
                   if ((room._id === booking.roomId) && (userInput.date === booking.date) && (userInput.hour == booking.hour)) {
-                    console.log(room.name + ' will NOT be displayed !');
                     return true
                   }
-                  console.log(room.name + ' will be displayed just fine');
                   return false
-
                 }
 
                 this.userInput = userInput;
@@ -116,16 +109,25 @@ export default {
                                 this.rooms[i]['disabled'] = checkEquipement(this.rooms[i], this.userInput)
                             if (!this.rooms[i]['disabled']) {
                                 this.rooms[i]['disabled'] = isAlreadyBooked(this.rooms[i], this.currentBookings[j], this.userInput);
-                                console.log('finally, ', this.rooms[i].name, ' has his disabled attribute at: ', this.rooms[i]['disabled']);
                             }
                           }
                         }
                         if (this.currentBookings.length == 0) {
                           for (let i = 0; i < this.rooms.length; i++) {
-                            this.rooms[i]['disabled'] = checkCapacity(this.rooms[i], this.userInput)
-                            this.rooms[i]['disabled'] = checkEquipement(this.rooms[i], this.userInput)
-                            console.log('finally, ', this.rooms[i].name, ' has his disabled attribute at: ', this.rooms[i]['disabled']);
-                            console.log('**************************************');
+                              console.log(this.rooms[i].name, " visibility is: ", this.rooms[i]['disabled']);
+                          }
+                          console.log('*********************************************');
+                          for (let i = 0; i < this.rooms.length; i++) {
+                            if (this.userInput.capacity > 0) {
+                              console.log('not supposed to be here');
+                                this.rooms[i]['disabled'] = checkCapacity(this.rooms[i], this.userInput)
+                              }
+                            if (this.userInput.equipement !== "Aucun" && !this.rooms[i]['disabled']) {
+                                this.rooms[i]['disabled'] = checkEquipement(this.rooms[i], this.userInput)
+                            }
+                            console.log(this.rooms[i].name, " visibility is: ", this.rooms[i]['disabled']);
+                            console.log('------------------------------------------------');
+                            eventBus.$emit('visibilityHasChanged', this.rooms[i])
                           }
                         }
                     })
