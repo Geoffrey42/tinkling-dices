@@ -14,12 +14,12 @@
 export default {
     data () {
         return {
-            capacities: ['05','10','11','26']
+            capacities: [5, 10, 11, 26]
         }
     },
     methods: {
         sendCapacity(event) {
-            this.$emit("capacityWasChanged", event);
+            this.$emit("capacityWasChanged", Number(event));
         }
     }
 }

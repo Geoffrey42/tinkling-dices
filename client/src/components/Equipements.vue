@@ -1,7 +1,7 @@
 
 <template>
     <b-field>
-        <b-select placeholder="Equipements" @input="sendEquipement($event)">
+        <b-select placeholder="Equipements" @input="sendEquipement($event)" v-model="defaultEquipement">
             <option
                 v-for="(equipement, index) in equipements"
                 :key="`equipements-${index}`">
@@ -15,6 +15,7 @@
 export default {
     data () {
         return {
+            defaultEquipement: "Aucun",
             equipements: ["TV","Retro Projecteur","Aucun"]
         }
     },
