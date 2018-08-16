@@ -7,7 +7,7 @@ module.exports = (server) => {
 
     server.get('/bookings', BookingController.readAll);
     server.get('/bookings/:id', BookingController.readById);
-    server.get('/booking/', BookingController.readByTime);
+    server.get('/booking/:date/:hour', BookingController.readByTime);
     server.post('/booking', BookingController.create);
     server.delete('/booking/:id', BookingController.delete);
 }
