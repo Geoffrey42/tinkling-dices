@@ -33,17 +33,20 @@ export default {
       console.log('userInput', this.userInput);
       console.log('rooms', this.rooms);
       console.log('currentBookings', this.currentBookings);
+      /*
         eventBus.$on('formWasChanged', (userInput) => {
             this.userInput = userInput;
             BookingService.getBookingsByTime(this.userInput.date, this.userInput.hour)
                 .then ( (fetchedBookings) => {
+                  console.log('fetchedBookings created', fetchedBookings);
                     for (var i = 0; i < fetchedBookings.data.length; i++) {
                         this.currentBookings.push(fetchedBookings.data[i])
                     }
                 })
-        });
+        });*/
         RoomService.getAllRooms()
             .then( (fetchedRooms) => {
+              console.log('fetchedRoomscreated', fetchedRooms);
                 for (var i = 0; i < fetchedRooms.data.length; i++) {
                     this.rooms.push(fetchedRooms.data[i])
                 }
@@ -64,15 +67,23 @@ export default {
     updated() {
       eventBus.$on('formWasChanged', (userInput) => {
           this.userInput = userInput;
+          console.log('updated');
           BookingService.getBookingsByTime(this.userInput.date, this.userInput.hour)
               .then ( (fetchedBookings) => {
-                  for (var i = 0; i < fetchedBookings.data.length; i++) {
-                      this.currentBookings.push(fetchedBookings.data[i])
+                console.log('fetchedBookings updated', fetchedBookings);
+                console.log('FETCH',fetchedBookings.data.results);
+                console.log('FETCH length',fetchedBookings.data.results.length);
+
+                  for (var i = 0; i < fetchedBookings.data.results.length; i++) {
+                    console.log('Je suis dans la boucle');
+                      this.currentBookings.push(fetchedBookings.data.results[i])
                   }
+
+                  console.log('apres boucle', this.currentBookings);
               })
               .catch ( (error) => console.error(error))
       });
-      console.log('dans update');
+      console.log('dans update***-');
       console.log('userInput u', this.userInput);
       console.log('rooms u', this.rooms);
       console.log('currentBookings u', this.currentBookings);
