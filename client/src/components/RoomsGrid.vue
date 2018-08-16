@@ -2,7 +2,7 @@
     <div class="columns">
         <single-room
             class="column"
-            v-for="(room, index) in rooms"
+            v-for="room in rooms"
             :key="room._id"
             :userInput="userInput"
             :roomName="room.name"
@@ -25,13 +25,11 @@ export default {
             userInput: Object,
             rooms: [],
             currentBookings: [],
+            errorsList: []
         }
     },
     components: {
         'single-room': Room
-    },
-    beforeCreate() {
-      // console.log('RoomsGrid : beforeCreate() hook activated');
     },
     created() {
         RoomService.getAllRooms()
@@ -42,20 +40,6 @@ export default {
                 }
             })
             eventBus.$on('formWasChanged', (userInput) => {
-
-                function displayDebug(room, booking, userInput) {
-                  console.log('name : ', room.name);
-
-                  console.log('room.capacity: ', room.capacity);
-                  console.log('userInput.capacity: ', userInput.capacity);
-                  console.log('                 ***');
-                  for (let i = 0; i < room.equipements.length; i++) {
-                    if (typeof room.equipements[i].name !== "undefined") {
-                      console.log('room.equipements.name: ', i, ': ', room.equipements[i].name);
-                    }
-                  }
-                  console.log('userInput.equipement: ', userInput.equipement);
-                }
 
                 function checkCapacity(room, userInput) {
                   let refusal = true;
@@ -114,75 +98,20 @@ export default {
                         }
                         if (this.currentBookings.length == 0) {
                           for (let i = 0; i < this.rooms.length; i++) {
-                              console.log(this.rooms[i].name, " visibility is: ", this.rooms[i]['disabled']);
-                          }
-                          console.log('*********************************************');
-                          for (let i = 0; i < this.rooms.length; i++) {
                             if (this.userInput.capacity > 0) {
-                              console.log('not supposed to be here');
                                 this.rooms[i]['disabled'] = checkCapacity(this.rooms[i], this.userInput)
                               }
                             if (this.userInput.equipement !== "Aucun" && !this.rooms[i]['disabled']) {
                                 this.rooms[i]['disabled'] = checkEquipement(this.rooms[i], this.userInput)
                             }
-                            console.log(this.rooms[i].name, " visibility is: ", this.rooms[i]['disabled']);
-                            console.log('------------------------------------------------');
                             eventBus.$emit('visibilityHasChanged', this.rooms[i])
                           }
                         }
                     })
-                    .catch ( (error) => console.error(error))
+                    .catch ( (error) => {
+                      this.errorsList.push(error)
+                    })
             });
-    },
-    beforeMount() {
-      // console.log('RoomsGrid : beforeMount() hook activated');
-      eventBus.$on('formWasChanged', (userInput) => {
-        // console.log('userInput is received (beforeMount):', userInput);
-      })
-    },
-    mounted() {
-      // console.log('RoomsGrid : mounted() hook activated');
-      eventBus.$on('formWasChanged', (userInput) => {
-        // console.log('userInput is received (mounted):', userInput);
-      })
-    },
-    beforeUpdate() {
-      // console.log('RoomsGrid : beforeUpdate() hook activated');
-      eventBus.$on('formWasChanged', (userInput) => {
-        // console.log('userInput is received (beforeUpdate):', userInput);
-      })
-    },
-    updated() {
-      // console.log('RoomsGrid : updated() hook activated');
-      eventBus.$on('formWasChanged', (userInput) => {
-        // console.log('userInput is received (updated):', userInput);
-      })
-
-      // let newRooms = null
-      //  newRooms = this.rooms.map((room) => {
-      //    console.log('CURRENTBOOKINGS',this.currentBookings);
-      //    const find = this.currentBookings.find( (booking) => booking.roomId === room._id)
-      //    console.log('find results', find);
-      //   if (this.currentBookings.find( (booking) => {
-      //     console.log('DANS IF');
-      //       return booking.roomId === room._id
-      //     })) {
-      //       room.disabled = true
-      //     }
-      //   return room
-      // })
-      //
-      // console.log('dans update***-');
-      // console.log('userInput u', this.userInput);
-      // console.log('rooms u', this.rooms);
-      // console.log('currentBookings u', this.currentBookings);
-      // console.log('---------------------------------------');
-    },
-    beforeDestroy() {
-      // console.log('RoomsGrid : beforeDestroy() hook activated');
-    },
-    destroyed() {
-      // console.log('RoomsGrid : destroyed() hook activated');
     }
 }
 
