@@ -27,9 +27,9 @@ export default {
     data() {
         return{
             date: new Date(),
-            hour: 0,
-            capacity: "",
-            equipement: ""
+            hour: 7,
+            capacity: 0,
+            equipement: "Aucun"
         };
     },
     methods: {
