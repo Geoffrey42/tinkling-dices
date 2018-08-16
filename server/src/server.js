@@ -7,6 +7,7 @@ const routes = require('../routes/index')
 const server = express()
 const Room = require("../models/rooms");
 const fs = require('fs');
+require('dotenv').config;
 
 server.use(morgan('combined'))
 server.use(bodyParser.json())
@@ -14,7 +15,9 @@ server.use(cors())
 routes(server);
 
 let dbName = 'sf_booking';
-mongoose.connect('mongodb://localhost:27017/' + dbName, { useNewUrlParser: true });
+const DATABASE_URL = process.env.DATABASE_URL
+mongoose.connect('mongodb://' + DATABASE_URL + ':27017/' + dbName, { useNewUrlParser: true });
+
 
 let db = mongoose.connection;
 db.on("error", console.error.bind(console, "Connection to " + dbName + " failed"));
