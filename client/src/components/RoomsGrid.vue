@@ -31,123 +31,122 @@ export default {
         'single-room': Room
     },
     beforeCreate() {
-      console.log('RoomsGrid : beforeCreate() hook activated');
+      // console.log('RoomsGrid : beforeCreate() hook activated');
     },
     created() {
-      console.log('RoomsGrid : created() hook activated');
-      /*
-        eventBus.$on('formWasChanged', (userInput) => {
-            this.userInput = userInput;
-            BookingService.getBookingsByTime(this.userInput.date, this.userInput.hour)
-                .then ( (fetchedBookings) => {
-                  console.log('fetchedBookings created', fetchedBookings);
-                    for (var i = 0; i < fetchedBookings.data.length; i++) {
-                        this.currentBookings.push(fetchedBookings.data[i])
-                    }
-                })
-        });*/
         RoomService.getAllRooms()
             .then( (fetchedRooms) => {
-              console.log('fetchedRoomscreated', fetchedRooms);
                 for (var i = 0; i < fetchedRooms.data.length; i++) {
                     this.rooms.push(fetchedRooms.data[i])
                     this.rooms[i]['disabled'] = false;
                 }
             })
             eventBus.$on('formWasChanged', (userInput) => {
+                console.log('rooms: ', this.rooms);
+                console.log('userInput: ', userInput);
+
+                // function isNotSuitable(room, userInput) {
+                //   // console.log('**************************************');
+                //   // console.log(userInput);
+                //   console.log('name : ', room.name);
+                //
+                //   console.log('room.capacity: ', room.capacity);
+                //   console.log('userInput.capacity: ', userInput.capacity);
+                //   console.log('                 ***');
+                //   for (let i = 0; i < room.equipements.length; i++) {
+                //     if (typeof room.equipements[i].name !== "undefined") {
+                //       console.log('room.equipements.name: ', i, ': ', room.equipements[i].name);
+                //     }
+                //   }
+                //   console.log('userInput.equipement: ', userInput.equipement);
+                //   let disabled = true;
+                //   if (userInput.capacity) {
+                //     if (room.capacity >= userInput.capacity) {
+                //       disabled = false
+                //     }
+                //   }
+                //   if (userInput.equipement !== "Aucun" && room.name != "Salle Okjsdkso") {
+                //     console.log(room.name, ' may have suitable equipement');
+                //     for (let i = 0; i < room.equipements.length; i++) {
+                //       if (room.equipements[i].name === userInput.equipement) {
+                //         console.log(room.name, ' SURE have the correct equipement !!!!! ******');
+                //         disabled = false
+                //       }
+                //     }
+                //     // if (!disabled) {
+                //     //   console.log(room.name, ' DO NOT have the correct equipement !!!!! TOO BAD !!!');
+                //     //   disabled = true
+                //     // }
+                //   }
+                //   console.log('**************************************');
+                //   return disabled
+                // }
 
                 function isDisabled(room, booking, userInput) {
-                  // console.log('--------------------------------------------------');
-                  // console.log('name : ', room.name);
-                  // console.log('               ***');
-                  // console.log('room._id: ', room._id);
-                  // console.log('booking.roomId: ', booking.roomId);
-                  // console.log('id condition: ', room._id === booking.roomId);
-                  //
-                  // console.log('               ***');
-                  // console.log('booking.date: ', booking.date);
-                  // console.log('userInput.date: ', userInput.date);
-                  // console.log('date condition',userInput.date === booking.date);
-                  //
-                  // console.log('               ***');
-                  // console.log('booking.hour: ', booking.hour, typeof booking.hour);
-                  // console.log('userInput.hour: ', userInput.hour, typeof userInput.hour);
-                  // console.log('hour condition: ', userInput.hour == booking.hour);
-                  // console.log('--------------------------------------------------');
                   if ((room._id === booking.roomId) && (userInput.date === booking.date) && (userInput.hour == booking.hour)) {
                     console.log(room.name + ' will NOT be displayed !');
                     return true
                   }
                   console.log(room.name + ' will be displayed just fine');
+                  // return isNotSuitable(room, userInput)
                   return false
+
                 }
+
                 this.userInput = userInput;
-                console.log('userInput is received (created):', userInput);
                 for (var i = 0; i < this.rooms.length; i++) {
                     this.rooms[i]['disabled'] = false;
                 }
-                BookingService.getBookingsByTime(this.userInput.date, this.userInput.hour)
+                BookingService
+                    .getBookingsByTime(this.userInput.date, this.userInput.hour)
                     .then ( (fetchedBookings) => {
+                        console.log('time to do async stuff');
                         for (var i = 0; i < fetchedBookings.data.results.length; i++) {
                             this.currentBookings.push(fetchedBookings.data.results[i])
                         }
-                        // console.log('CURRENTBOOKINGS: ', this.currentBookings);
-                        // console.log('len rooms:', this.rooms.length);
-                        // console.log('rooms:', this.rooms);
-                        //
-                        // console.log('len currentBookings: ', this.currentBookings.length);
-                        // console.log('currentBookings: ', this.currentBookings);
-
-
                         for (let i = 0; i < this.rooms.length; i++) {
-                          // console.log('1st loop level');
                           for (let j = 0; j < this.currentBookings.length; j++) {
-                            // console.log('2nd loop level');
-                            // console.log('roomID: ', this.currentBookings[j].roomId);
-                            // console.log('_id: ', this.rooms[i]._id);
-                            // if (this.rooms[i]._id === this.currentBookings[j].roomId) {
-                            //   this.rooms[i]['disabled'] = true;
-                            //   //console.log("Don't display", this.rooms[i].name);
-                            // }
                             if (!this.rooms[i]['disabled']) {
-                                this.rooms[i]['disabled'] = isDisabled(this.rooms[i], this.currentBookings[j], this.userInput)
+                                this.rooms[i]['disabled'] = isDisabled(this.rooms[i], this.currentBookings[j], this.userInput);
+                                console.log('finally, ', this.rooms[i].name, ' has his disabled attribute at: ', this.rooms[i]['disabled']);
                             }
-                            //console.log('----------------------------------------');
-                            // console.log('roomsEND:', this.rooms);
-
                           }
                         }
-                        // console.log('roomsEND:', this.rooms);
-
+                        // if (this.currentBookings.length == 0) {
+                        //   for (let i = 0; i < this.rooms.length; i++) {
+                        //     this.rooms[i]['disabled'] = isNotSuitable(this.rooms[i], this.userInput)
+                        //     console.log('finally, ', this.rooms[i].name, ' has his disabled attribute at: ', this.rooms[i]['disabled']);
+                        //
+                        //   }
+                        // }
                     })
                     .catch ( (error) => console.error(error))
+                  console.log('also');
             });
-            // console.log('roomsEND:', this.rooms);
-
-
+            console.log('here');
     },
     beforeMount() {
-      console.log('RoomsGrid : beforeMount() hook activated');
+      // console.log('RoomsGrid : beforeMount() hook activated');
       eventBus.$on('formWasChanged', (userInput) => {
-        console.log('userInput is received (beforeMount):', userInput);
+        // console.log('userInput is received (beforeMount):', userInput);
       })
     },
     mounted() {
-      console.log('RoomsGrid : mounted() hook activated');
+      // console.log('RoomsGrid : mounted() hook activated');
       eventBus.$on('formWasChanged', (userInput) => {
-        console.log('userInput is received (mounted):', userInput);
+        // console.log('userInput is received (mounted):', userInput);
       })
     },
     beforeUpdate() {
-      console.log('RoomsGrid : beforeUpdate() hook activated');
+      // console.log('RoomsGrid : beforeUpdate() hook activated');
       eventBus.$on('formWasChanged', (userInput) => {
-        console.log('userInput is received (beforeUpdate):', userInput);
+        // console.log('userInput is received (beforeUpdate):', userInput);
       })
     },
     updated() {
-      console.log('RoomsGrid : updated() hook activated');
+      // console.log('RoomsGrid : updated() hook activated');
       eventBus.$on('formWasChanged', (userInput) => {
-        console.log('userInput is received (updated):', userInput);
+        // console.log('userInput is received (updated):', userInput);
       })
 
       // let newRooms = null
@@ -171,10 +170,10 @@ export default {
       // console.log('---------------------------------------');
     },
     beforeDestroy() {
-      console.log('RoomsGrid : beforeDestroy() hook activated');
+      // console.log('RoomsGrid : beforeDestroy() hook activated');
     },
     destroyed() {
-      console.log('RoomsGrid : destroyed() hook activated');
+      // console.log('RoomsGrid : destroyed() hook activated');
     }
 }
 
