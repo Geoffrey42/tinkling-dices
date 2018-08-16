@@ -45,42 +45,37 @@ export default {
                 console.log('rooms: ', this.rooms);
                 console.log('userInput: ', userInput);
 
-                // function isNotSuitable(room, userInput) {
-                //   // console.log('**************************************');
-                //   // console.log(userInput);
-                //   console.log('name : ', room.name);
-                //
-                //   console.log('room.capacity: ', room.capacity);
-                //   console.log('userInput.capacity: ', userInput.capacity);
-                //   console.log('                 ***');
-                //   for (let i = 0; i < room.equipements.length; i++) {
-                //     if (typeof room.equipements[i].name !== "undefined") {
-                //       console.log('room.equipements.name: ', i, ': ', room.equipements[i].name);
-                //     }
-                //   }
-                //   console.log('userInput.equipement: ', userInput.equipement);
-                //   let disabled = true;
-                //   if (userInput.capacity) {
-                //     if (room.capacity >= userInput.capacity) {
-                //       disabled = false
-                //     }
-                //   }
-                //   if (userInput.equipement !== "Aucun" && room.name != "Salle Okjsdkso") {
-                //     console.log(room.name, ' may have suitable equipement');
-                //     for (let i = 0; i < room.equipements.length; i++) {
-                //       if (room.equipements[i].name === userInput.equipement) {
-                //         console.log(room.name, ' SURE have the correct equipement !!!!! ******');
-                //         disabled = false
-                //       }
-                //     }
-                //     // if (!disabled) {
-                //     //   console.log(room.name, ' DO NOT have the correct equipement !!!!! TOO BAD !!!');
-                //     //   disabled = true
-                //     // }
-                //   }
-                //   console.log('**************************************');
-                //   return disabled
-                // }
+                function isNotSuitable(room, userInput) {
+                  // console.log('**************************************');
+                  // console.log(userInput);
+                  console.log('name : ', room.name);
+
+                  console.log('room.capacity: ', room.capacity);
+                  console.log('userInput.capacity: ', userInput.capacity);
+                  console.log('                 ***');
+                  for (let i = 0; i < room.equipements.length; i++) {
+                    if (typeof room.equipements[i].name !== "undefined") {
+                      console.log('room.equipements.name: ', i, ': ', room.equipements[i].name);
+                    }
+                  }
+                  console.log('userInput.equipement: ', userInput.equipement);
+                  let disabled = true;
+                  if (userInput.capacity) {
+                    if (room.capacity >= userInput.capacity) {
+                      disabled = false
+                    }
+                  }
+                  if (userInput.equipement !== "Aucun" && room.name != "Salle Okjsdkso") {
+                    for (let i = 0; i < room.equipements.length; i++) {
+                      if (room.equipements[i].name === userInput.equipement) {
+                        console.log(room.name, ' SURE have the correct equipement !!!!! ******');
+                        disabled = false
+                      }
+                    }
+                  }
+                  console.log('**************************************');
+                  return disabled
+                }
 
                 function isDisabled(room, booking, userInput) {
                   if ((room._id === booking.roomId) && (userInput.date === booking.date) && (userInput.hour == booking.hour)) {
@@ -112,13 +107,13 @@ export default {
                             }
                           }
                         }
-                        // if (this.currentBookings.length == 0) {
-                        //   for (let i = 0; i < this.rooms.length; i++) {
-                        //     this.rooms[i]['disabled'] = isNotSuitable(this.rooms[i], this.userInput)
-                        //     console.log('finally, ', this.rooms[i].name, ' has his disabled attribute at: ', this.rooms[i]['disabled']);
-                        //
-                        //   }
-                        // }
+                        if (this.currentBookings.length == 0) {
+                          for (let i = 0; i < this.rooms.length; i++) {
+                            this.rooms[i]['disabled'] = isNotSuitable(this.rooms[i], this.userInput)
+                            console.log('finally, ', this.rooms[i].name, ' has his disabled attribute at: ', this.rooms[i]['disabled']);
+
+                          }
+                        }
                     })
                     .catch ( (error) => console.error(error))
                   console.log('also');
