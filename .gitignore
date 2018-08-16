@@ -1,6 +1,10 @@
 # misc
 *.swp
 *.DS_Store
+.env
 
 # node
 node_modules
+
+# db
+db/
