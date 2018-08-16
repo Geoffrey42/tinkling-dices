@@ -2,7 +2,7 @@
     <div class="columns">
         <single-room
             class="column"
-            v-for="room in rooms"
+            v-for="(room, index) in rooms"
             :key="room._id"
             :userInput="userInput"
             :roomName="room.name"
@@ -42,12 +42,12 @@ export default {
                 }
             })
             eventBus.$on('formWasChanged', (userInput) => {
+                console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
+                console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
                 console.log('rooms: ', this.rooms);
                 console.log('userInput: ', userInput);
 
-                function isNotSuitable(room, userInput) {
-                  // console.log('**************************************');
-                  // console.log(userInput);
+                function displayDebug(room, booking, userInput) {
                   console.log('name : ', room.name);
 
                   console.log('room.capacity: ', room.capacity);
@@ -59,31 +59,41 @@ export default {
                     }
                   }
                   console.log('userInput.equipement: ', userInput.equipement);
-                  let disabled = true;
-                  if (userInput.capacity) {
+                }
+
+                function checkCapacity(room, userInput) {
+                  let refusal = true;
+
+                  if (userInput.capacity != 0) {
                     if (room.capacity >= userInput.capacity) {
-                      disabled = false
+                      refusal = false
                     }
                   }
-                  if (userInput.equipement !== "Aucun" && room.name != "Salle Okjsdkso") {
+                  return refusal
+                }
+
+                function checkEquipement(room, userInput) {
+                  let disabled = true
+
+                  if (userInput.equipement !== "Aucun" && room.equipements.length > 0) {
                     for (let i = 0; i < room.equipements.length; i++) {
                       if (room.equipements[i].name === userInput.equipement) {
-                        console.log(room.name, ' SURE have the correct equipement !!!!! ******');
                         disabled = false
                       }
                     }
                   }
-                  console.log('**************************************');
+                  if (userInput.equipement === "Aucun") {
+                    disabled = false
+                  }
                   return disabled
                 }
 
-                function isDisabled(room, booking, userInput) {
+                function isAlreadyBooked(room, booking, userInput) {
                   if ((room._id === booking.roomId) && (userInput.date === booking.date) && (userInput.hour == booking.hour)) {
                     console.log(room.name + ' will NOT be displayed !');
                     return true
                   }
                   console.log(room.name + ' will be displayed just fine');
-                  // return isNotSuitable(room, userInput)
                   return false
 
                 }
@@ -95,30 +105,32 @@ export default {
                 BookingService
                     .getBookingsByTime(this.userInput.date, this.userInput.hour)
                     .then ( (fetchedBookings) => {
-                        console.log('time to do async stuff');
                         for (var i = 0; i < fetchedBookings.data.results.length; i++) {
                             this.currentBookings.push(fetchedBookings.data.results[i])
                         }
                         for (let i = 0; i < this.rooms.length; i++) {
                           for (let j = 0; j < this.currentBookings.length; j++) {
+                            if (this.userInput.capacity > 0)
+                                this.rooms[i]['disabled'] = checkCapacity(this.rooms[i], this.userInput);
+                            if (this.userInput.equipement !== "Aucun" && !this.rooms[i]['disabled'])
+                                this.rooms[i]['disabled'] = checkEquipement(this.rooms[i], this.userInput)
                             if (!this.rooms[i]['disabled']) {
-                                this.rooms[i]['disabled'] = isDisabled(this.rooms[i], this.currentBookings[j], this.userInput);
+                                this.rooms[i]['disabled'] = isAlreadyBooked(this.rooms[i], this.currentBookings[j], this.userInput);
                                 console.log('finally, ', this.rooms[i].name, ' has his disabled attribute at: ', this.rooms[i]['disabled']);
                             }
                           }
                         }
                         if (this.currentBookings.length == 0) {
                           for (let i = 0; i < this.rooms.length; i++) {
-                            this.rooms[i]['disabled'] = isNotSuitable(this.rooms[i], this.userInput)
+                            this.rooms[i]['disabled'] = checkCapacity(this.rooms[i], this.userInput)
+                            this.rooms[i]['disabled'] = checkEquipement(this.rooms[i], this.userInput)
                             console.log('finally, ', this.rooms[i].name, ' has his disabled attribute at: ', this.rooms[i]['disabled']);
-
+                            console.log('**************************************');
                           }
                         }
                     })
                     .catch ( (error) => console.error(error))
-                  console.log('also');
             });
-            console.log('here');
     },
     beforeMount() {
       // console.log('RoomsGrid : beforeMount() hook activated');
