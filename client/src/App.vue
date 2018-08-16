@@ -12,7 +12,7 @@
         <section class="hero">
             <div class="hero-body">
                 <div class="container">
-                    <p class="misplaced">... Book an amazing room</p>
+                    <p class="misplaced">... And Book an amazing room</p>
                     <app-rooms-grid></app-rooms-grid>
                 </div>
             </div>
