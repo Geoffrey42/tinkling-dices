@@ -1,6 +1,9 @@
 <template>
     <section>
-        <button class="button is-medium is-info" @click="confirm">
+        <button
+          class="button is-medium is-info"
+          :disabled="isDisabled"
+          @click="confirm">
             {{ roomName }}
         </button>
     </section>
@@ -9,9 +12,22 @@
 <script>
 import BookingService from '../services/BookingService';
 
-
 export default {
-    props: ['roomName', 'roomId', 'userInput'],
+    props: ['roomName', 'roomId', 'userInput', 'visibility','currentBookings'],
+    data(){
+      return {
+        visible:false
+      }
+    },
+    computed: {
+      isDisabled () {
+        console.log('did something happen ???');
+        console.log('room: ', this.roomName);
+        console.log('visibility: ', this.visibility);
+      
+        return this.visibility
+      }
+    },
     methods: {
         confirm() {
             this.$dialog.confirm({
