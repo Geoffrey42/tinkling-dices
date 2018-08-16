@@ -4,7 +4,7 @@
         <section class="hero">
             <div class="hero-body">
                 <div class="container">
-                    <p>Make a wish ...</p>
+                    <p class="misplaced">Make a wish ...</p>
                     <app-form></app-form>
                 </div>
             </div>
