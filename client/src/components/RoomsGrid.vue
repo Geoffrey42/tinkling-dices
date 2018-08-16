@@ -38,7 +38,7 @@ export default {
             .then( (fetchedRooms) => {
                 for (var i = 0; i < fetchedRooms.data.length; i++) {
                     this.rooms.push(fetchedRooms.data[i])
-                    this.rooms[i]['disabled'] = false;
+                    this.rooms[i]['disabled'] = true;
                 }
             })
             eventBus.$on('formWasChanged', (userInput) => {
