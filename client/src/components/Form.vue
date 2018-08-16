@@ -16,6 +16,7 @@ import Hour from './Hour.vue';
 import Capacity from './Capacity.vue';
 import Equipements from './Equipements.vue';
 import { eventBus } from '../main';
+const moment = require('moment');
 
 export default {
     components: {
@@ -29,13 +30,14 @@ export default {
             date: new Date(),
             hour: 7,
             capacity: 0,
-            equipement: "Aucun"
+            equipement: "Aucun",
+            moment: moment
         };
     },
     methods: {
         sendUserInput() {
             var userInput = {
-                date: this.date,
+                date: this.moment(this.date).add(1, 'day').toISOString(),
                 hour: this.hour,
                 capacity: this.capacity,
                 equipement: this.equipement
