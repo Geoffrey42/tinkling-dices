@@ -11,27 +11,28 @@
 
 <script>
 import BookingService from '../services/BookingService';
+const moment = require('moment');
 
 export default {
     props: ['roomName', 'roomId', 'userInput', 'visibility','currentBookings'],
     data(){
       return {
-        visible: true
+        visible: true,
+        moment: moment
       }
     },
     computed: {
       isDisabled () {
-        // console.log('did something happen ???');
-        // console.log('room: ', this.roomName);
-        // console.log('visibility: ', this.visibility);
-
-        return this.visibility
+          return this.visibility
+      },
+      rightDate() {
+        return this.moment(this.userInput.date).format('LL')
       }
     },
     methods: {
         confirm() {
             this.$dialog.confirm({
-                message: "You're about to book " + this.roomName + " for " + this.userInput.date + ".\nAre you sure ?",
+                message: "You're about to book " + this.roomName + " for " + this.rightDate + ". Are you sure ?",
                 onConfirm: () => {
                     BookingService.postBooking({
                         roomId: this.roomId,
