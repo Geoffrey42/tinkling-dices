@@ -6,7 +6,7 @@ import 'buefy/lib/buefy.css'
 
 export const eventBus = new Vue();
 
-axios.defaults.baseURL = 'http://localhost:8081'
+axios.defaults.baseURL = process.env.API_URL || 'http://localhost:8081'
 
 Vue.config.productionTip = false
 Vue.use(Buefy)
