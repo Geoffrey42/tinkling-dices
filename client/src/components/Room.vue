@@ -21,10 +21,10 @@ export default {
     },
     computed: {
       isDisabled () {
-        console.log('did something happen ???');
-        console.log('room: ', this.roomName);
-        console.log('visibility: ', this.visibility);
-      
+        // console.log('did something happen ???');
+        // console.log('room: ', this.roomName);
+        // console.log('visibility: ', this.visibility);
+
         return this.visibility
       }
     },
@@ -50,6 +50,30 @@ export default {
                 }
             })
         },
+    },
+    beforeCreate() {
+      console.log('\tSingleRoom : beforeCreate() hook activated');
+    },
+    created() {
+      console.log('\tSingleRoom (', this.roomName, '): created() hook activated');
+    },
+    beforeMount() {
+      console.log('\tSingleRoom (', this.roomName, '): beforeMount() hook activated');
+    },
+    mounted() {
+      console.log('\tSingleRoom (', this.roomName, '): mounted() hook activated');
+    },
+    beforeUpdate() {
+      console.log('\tSingleRoom (', this.roomName, '): beforeUpdate() hook activated');
+    },
+    updated() {
+      console.log('\tSingleRoom (', this.roomName, '): updated() hook activated');
+    },
+    beforeDestroy() {
+      console.log('\tSingleRoom (', this.roomName, '): beforeDestroy() hook activated');
+    },
+    destroyed() {
+      console.log('\tSingleRoom (', this.roomName, '): destroyed() hook activated');
     }
 }
 
