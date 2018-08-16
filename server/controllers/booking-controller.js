@@ -8,6 +8,11 @@ module.exports = {
             .then( (results) => {
                 res.send(results);
             })
+            .catch((error) => {
+                res.status(404).send({
+                  message: "Booking not found : " + error
+                })
+            })
     },
     readById(req, res) {
         Booking
@@ -15,12 +20,22 @@ module.exports = {
             .then( (result) => {
                 res.send(result);
             })
+            .catch((error) => {
+                res.status(404).send({
+                  message: "Booking not found : " + error
+                })
+            })
     },
     readByTime(req, res) {
         Booking
-            .find({'date':req.params.date, 'hour':req.params.hour})
+            .find({'date':decodeURIComponent(req.params.date), 'hour':req.params.hour})
             .then( (results) => {
-                res.send(results);
+                res.send({results, message: "Booking successfully received"});
+            })
+            .catch((error) => {
+                res.status(404).send({
+                  message: "Booking not found : " + error
+                })
             })
     },
     create(req, res) {
