@@ -57,23 +57,23 @@ export default {
             eventBus.$on('formWasChanged', (userInput) => {
 
                 function isDisabled(room, booking, userInput) {
-                  console.log('--------------------------------------------------');
-                  console.log('name : ', room.name);
-                  console.log('               ***');
-                  console.log('room._id: ', room._id);
-                  console.log('booking.roomId: ', booking.roomId);
-                  console.log('id condition: ', room._id === booking.roomId);
-
-                  console.log('               ***');
-                  console.log('booking.date: ', booking.date);
-                  console.log('userInput.date: ', userInput.date);
-                  console.log('date condition',userInput.date === booking.date);
-
-                  console.log('               ***');
-                  console.log('booking.hour: ', booking.hour, typeof booking.hour);
-                  console.log('userInput.hour: ', userInput.hour, typeof userInput.hour);
-                  console.log('hour condition: ', userInput.hour == booking.hour);
-                  console.log('--------------------------------------------------');
+                  // console.log('--------------------------------------------------');
+                  // console.log('name : ', room.name);
+                  // console.log('               ***');
+                  // console.log('room._id: ', room._id);
+                  // console.log('booking.roomId: ', booking.roomId);
+                  // console.log('id condition: ', room._id === booking.roomId);
+                  //
+                  // console.log('               ***');
+                  // console.log('booking.date: ', booking.date);
+                  // console.log('userInput.date: ', userInput.date);
+                  // console.log('date condition',userInput.date === booking.date);
+                  //
+                  // console.log('               ***');
+                  // console.log('booking.hour: ', booking.hour, typeof booking.hour);
+                  // console.log('userInput.hour: ', userInput.hour, typeof userInput.hour);
+                  // console.log('hour condition: ', userInput.hour == booking.hour);
+                  // console.log('--------------------------------------------------');
                   if ((room._id === booking.roomId) && (userInput.date === booking.date) && (userInput.hour == booking.hour)) {
                     console.log(room.name + ' will NOT be displayed !');
                     return true
@@ -109,7 +109,9 @@ export default {
                             //   this.rooms[i]['disabled'] = true;
                             //   //console.log("Don't display", this.rooms[i].name);
                             // }
-                            this.rooms[i]['disabled'] = isDisabled(this.rooms[i], this.currentBookings[j], this.userInput)
+                            if (!this.rooms[i]['disabled']) {
+                                this.rooms[i]['disabled'] = isDisabled(this.rooms[i], this.currentBookings[j], this.userInput)
+                            }
                             //console.log('----------------------------------------');
                             // console.log('roomsEND:', this.rooms);
 
