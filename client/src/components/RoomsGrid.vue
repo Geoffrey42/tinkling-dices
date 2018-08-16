@@ -6,6 +6,8 @@
             :key="room._id"
             :userInput="userInput"
             :roomName="room.name"
+            :currentBookings="currentBookings"
+            :visibility="room.disabled"
             :roomId="room._id"></single-room>
     </div>
 </template>
@@ -28,11 +30,9 @@ export default {
     components: {
         'single-room': Room
     },
+
     created() {
-      console.log('dans created');
-      console.log('userInput', this.userInput);
-      console.log('rooms', this.rooms);
-      console.log('currentBookings', this.currentBookings);
+
       /*
         eventBus.$on('formWasChanged', (userInput) => {
             this.userInput = userInput;
@@ -49,40 +49,68 @@ export default {
               console.log('fetchedRoomscreated', fetchedRooms);
                 for (var i = 0; i < fetchedRooms.data.length; i++) {
                     this.rooms.push(fetchedRooms.data[i])
+                    this.rooms[i]['disabled'] = false;
                 }
             })
-      console.log('dans created');
-      console.log('userInput c', this.userInput);
-      console.log('rooms c', this.rooms);
-      console.log('currentBookings c', this.currentBookings);
-      console.log('---------------------------------------');
-    },
-    beforeUpdate(){
-      console.log('dans beforeUpdate');
-      console.log('userInput b', this.userInput);
-      console.log('rooms b', this.rooms);
-      console.log('currentBookings b', this.currentBookings);
-      console.log('---------------------------------------');
+            eventBus.$on('formWasChanged', (userInput) => {
+                this.userInput = userInput;
+                console.log('updated');
+                for (var i = 0; i < this.rooms.length; i++) {
+                    this.rooms[i]['disabled'] = false;
+                }
+                BookingService.getBookingsByTime(this.userInput.date, this.userInput.hour)
+                    .then ( (fetchedBookings) => {
+                        for (var i = 0; i < fetchedBookings.data.results.length; i++) {
+                            this.currentBookings.push(fetchedBookings.data.results[i])
+                        }
+                        console.log('CURRENTBOOKINGS: ', this.currentBookings);
+                        console.log('len rooms:', this.rooms.length);
+                        console.log('rooms:', this.rooms);
+
+                        console.log('len currentBookings: ', this.currentBookings.length);
+                        console.log('currentBookings: ', this.currentBookings);
+
+
+                        for (let i = 0; i < this.rooms.length; i++) {
+                          console.log('1st loop level');
+                          for (let j = 0; j < this.currentBookings.length; j++) {
+                            console.log('2nd loop level');
+                            console.log('roomID: ', this.currentBookings[j].roomId);
+                            console.log('_id: ', this.rooms[i]._id);
+                            if (this.rooms[i]._id === this.currentBookings[j].roomId) {
+                              this.rooms[i]['disabled'] = true;
+                              console.log("Don't display", this.rooms[i].name);
+                            }
+                            console.log('----------------------------------------');
+                            console.log('roomsEND:', this.rooms);
+
+                          }
+                        }
+                        console.log('roomsEND:', this.rooms);
+
+                    })
+                    .catch ( (error) => console.error(error))
+            });
+            console.log('roomsEND:', this.rooms);
+
+
     },
     updated() {
-      eventBus.$on('formWasChanged', (userInput) => {
-          this.userInput = userInput;
-          console.log('updated');
-          BookingService.getBookingsByTime(this.userInput.date, this.userInput.hour)
-              .then ( (fetchedBookings) => {
-                console.log('fetchedBookings updated', fetchedBookings);
-                console.log('FETCH',fetchedBookings.data.results);
-                console.log('FETCH length',fetchedBookings.data.results.length);
 
-                  for (var i = 0; i < fetchedBookings.data.results.length; i++) {
-                    console.log('Je suis dans la boucle');
-                      this.currentBookings.push(fetchedBookings.data.results[i])
-                  }
+      // let newRooms = null
+      //  newRooms = this.rooms.map((room) => {
+      //    console.log('CURRENTBOOKINGS',this.currentBookings);
+      //    const find = this.currentBookings.find( (booking) => booking.roomId === room._id)
+      //    console.log('find results', find);
+      //   if (this.currentBookings.find( (booking) => {
+      //     console.log('DANS IF');
+      //       return booking.roomId === room._id
+      //     })) {
+      //       room.disabled = true
+      //     }
+      //   return room
+      // })
 
-                  console.log('apres boucle', this.currentBookings);
-              })
-              .catch ( (error) => console.error(error))
-      });
       console.log('dans update***-');
       console.log('userInput u', this.userInput);
       console.log('rooms u', this.rooms);
