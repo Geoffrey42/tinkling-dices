@@ -11,8 +11,6 @@ axios.defaults.baseURL = process.env.API_URL || 'http://localhost:8081'
 Vue.config.productionTip = false
 Vue.use(Buefy)
 
-
 new Vue({
   render: h => h(App)
 }).$mount('#app')
-
