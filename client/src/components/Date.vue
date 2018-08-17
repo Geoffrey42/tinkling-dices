@@ -8,7 +8,6 @@
     </b-field>
 </template>
 <script>
-
 export default {
     data() {
         return {
