@@ -18,6 +18,17 @@ Bookings and rooms are stored in a mongoDB using Mongoose.
 $ git clone https://github.com/Geoffrey42/tinkling-dices.git
 $ cd tinkling-dices/
 ```
+## Developments
+
+to access server container, run:
+```shell
+$ docker exec -it tinklingdices_server_1 bash
+```
+to run the app locally go
+
+```
+http://localhost:8080/
+```
 
 ## Usage
 
