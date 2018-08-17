@@ -32,6 +32,7 @@ $ docker-compose up
 - [x] Node.js/Express.js Backend.
 - [x] Vue.js Frontend.
 - [ ] Bookings stored (among other way of storage) in a JSON file.
+- [x] Rooms bookings/recovery must be via AJAX and RESTful compliant. 
 - [x] For a same date/hour, rooms already booked must not be available for new bookings.
 - [x] No login/Authorization management, it's supposed to be handled already by an intranet.
 - [x] Ease-to-use and security
