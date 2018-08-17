@@ -31,14 +31,14 @@ $ docker-compose up
 
 - [x] Node.js/Express.js Backend.
 - [x] Vue.js Frontend.
-- [] Bookings stored (among other way of storage) in a JSON file.
+- [ ] Bookings stored (among other way of storage) in a JSON file.
 - [x] For a same date/hour, rooms already booked must not be available for new bookings.
 - [x] No login/Authorization management, it's supposed to be handled already by an intranet.
 - [x] Ease-to-use and security
 
 ### Bonus part
 
-- []  App hosted version
+- [ ]  App hosted version
 - [x]  Bookings stored in a MongoDB
 - [x]  Filtering by capacity or furniture features
 - [x]  Animations during booking
