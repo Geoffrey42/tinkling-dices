@@ -1,5 +1,5 @@
 const Booking = require('../models/bookings')
-
+const fs = require('fs');
 
 module.exports = {
     readAll(req, res) {
@@ -10,7 +10,7 @@ module.exports = {
             })
             .catch((error) => {
                 res.status(404).send({
-                  message: "Booking not found : " + error
+                  message: "Bookings not found : " + error
                 })
             })
     },
@@ -44,14 +44,24 @@ module.exports = {
             date: req.body.date,
             hour: req.body.hour
         });
-        booking.save((error) => {
-            if (error) {
-                return res.status(500).send({
+        booking
+          .save()
+          .then( (result) => {
+              Booking
+                  .find()
+                  .then( (results) => {
+                    console.log('starting writing bookings.json');
+                    let data = JSON.stringify(results, null, 2);
+                    fs.writeFileSync('./json_files/bookings.json', data);
+                    console.log('bookings.json has been writed');
+                  })
+              res.send({result, message: "Booking recorded successfully !" });
+          })
+          .catch( (error) => {
+              res.status(500).send({
                     message: "Booking has not been recorded because " + error
-                });
-            }
-            res.send({ message: "Booking recorded successfully !" });
-        });
+              })
+          })
     },
     delete(req, res) {
         Booking.findByIdAndRemove(req.params.id)
