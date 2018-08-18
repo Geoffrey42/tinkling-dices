@@ -1,5 +1,5 @@
 # tinkling-dices
-a little rooms booking platform for STATION F
+A little rooms booking platform for STATION F
 
 This project is originally a hiring technical test for STATION F.
 
@@ -18,6 +18,13 @@ Bookings and rooms are stored in a mongoDB using Mongoose.
 $ git clone https://github.com/Geoffrey42/tinkling-dices.git
 $ cd tinkling-dices/
 ```
+
+## Usage
+
+```shell
+$ docker-compose up
+```
+
 ## Developments
 
 to access server container, run:
@@ -28,12 +35,6 @@ to run the app locally go
 
 ```
 http://localhost:8080/
-```
-
-## Usage
-
-```shell
-$ docker-compose up
 ```
 
 ## Road Map
@@ -61,4 +62,4 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Please make sure to update tests as appropriate.
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](LICENSE)
